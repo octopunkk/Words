@@ -1,6 +1,6 @@
 import "./App.css";
-import { render } from "react-dom";
-import React, { useState, useCallback, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Grid } from "../Grid/Grid";
 import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
@@ -24,7 +24,7 @@ function App() {
     return randomPick;
   };
 
-  const [answer, setAnswer] = useState(pickAnswer());
+  const [answer] = useState(pickAnswer());
 
   let isValid = (wordArray) => {
     let word = wordArray.join("");
@@ -52,7 +52,7 @@ function App() {
     if (event.key === "Enter") {
       if (letterIndex === 4) {
         if (isValid(words[rowIndex])) {
-          if (words[rowIndex].toString("").replaceAll(",", "") === answer) {
+          if (words[rowIndex].toString().replaceAll(",", "") === answer) {
             window.alert("Gagné !");
           }
           setRowIndex((prev) => prev + 1);

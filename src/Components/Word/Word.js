@@ -1,5 +1,5 @@
 import "./Word.css";
-import React, { useState } from "react";
+import React from "react";
 import { Letter } from "../Letter/Letter";
 
 export function Word(props) {
