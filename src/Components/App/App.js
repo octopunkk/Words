@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "../Grid/Grid";
 import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
