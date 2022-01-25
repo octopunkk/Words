@@ -1,12 +1,14 @@
 import "./App.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Grid } from "../Grid/Grid";
 import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
+import { GameOver } from "../GameOver/GameOver";
 import Alert from "@mui/material/Alert";
 
 let letterIndex = -1;
+let timeEnd;
 
 function App() {
   const [words, setWords] = useState([
@@ -16,15 +18,35 @@ function App() {
     ["", "", "", "", ""],
     ["", "", "", "", ""],
   ]);
-  const [alertDisplay, setAlertDisplay] = useState("none");
+  const [alertDisplay, setAlertDisplay] = useState(false);
+  const [gameOverDisplay, setGameOverDisplay] = useState(false);
   const [rowIndex, setRowIndex] = useState(0);
+  const [winStatus, setWinStatus] = useState(); //true if win, false if lose, undef else
+  const [timeBegin, setTimeBegin] = useState(Date.now());
+
   let pickAnswer = () => {
     let randomIndex = Math.floor(CommonWords.length * Math.random());
     let randomPick = CommonWords[randomIndex];
     return randomPick;
   };
 
-  const [answer] = useState(pickAnswer());
+  const [answer, setAnswer] = useState(pickAnswer());
+
+  let resetGame = () => {
+    setWords([
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+    ]);
+    letterIndex = -1;
+    setRowIndex(0);
+    setAnswer(pickAnswer());
+    setWinStatus();
+    setGameOverDisplay(false);
+    setTimeBegin(Date.now());
+  };
 
   let isValid = (wordArray) => {
     let word = wordArray.join("");
@@ -34,7 +56,8 @@ function App() {
   const keyHandler = (event) => {
     if (event.key === "Backspace" || event.key === "Delete") {
       if (letterIndex !== -1) {
-        setAlertDisplay(() => "none");
+        setGameOverDisplay(() => false);
+        setAlertDisplay(() => false);
         let newWords = [...words];
         newWords[rowIndex][letterIndex] = "";
         letterIndex -= 1;
@@ -53,20 +76,27 @@ function App() {
       if (letterIndex === 4) {
         if (isValid(words[rowIndex])) {
           if (words[rowIndex].toString().replaceAll(",", "") === answer) {
-            window.alert("Gagné !");
+            timeEnd = Date.now();
+            setWinStatus(() => true);
+            setGameOverDisplay(() => true);
+            return;
           }
           setRowIndex((prev) => prev + 1);
           letterIndex = -1;
-          if (rowIndex === 5) {
-            window.alert("Fin de partie !");
+          if (rowIndex === 4) {
+            timeEnd = Date.now();
+            setGameOverDisplay(() => true);
+            setWinStatus(() => false);
           }
         } else {
-          setAlertDisplay(() => "content");
+          setAlertDisplay(() => true);
         }
       }
     }
   };
 
+  // const timeBegin = useMemo(() => getTime());
+  // useEffect(() => timeBegin= getTime(), []);
   useEffect(() => {
     document.addEventListener("keydown", keyHandler, false);
 
@@ -78,9 +108,24 @@ function App() {
   return (
     <div className="App">
       <h1>Words !</h1>
-      <Alert severity="error" variant="filled" sx={{ display: alertDisplay }}>
-        Word not in word list !
-      </Alert>
+      {gameOverDisplay && (
+        <GameOver
+          winStatus={winStatus}
+          answer={answer}
+          resetGame={resetGame}
+          timeBegin={timeBegin}
+          timeEnd={timeEnd}
+        />
+      )}
+      {alertDisplay && (
+        <Alert
+          severity="error"
+          variant="filled"
+          sx={{ width: "50%", margin: "0 auto" }}
+        >
+          Word not in word list !
+        </Alert>
+      )}
       <br />
       <Grid words={words} answer={answer} currentRow={rowIndex} />
     </div>
