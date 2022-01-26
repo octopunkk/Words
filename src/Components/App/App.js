@@ -6,9 +6,13 @@ import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
 import { GameOver } from "../GameOver/GameOver";
 import Alert from "@mui/material/Alert";
+import { Keyboard } from "../Keyboard/Keyboard";
 
 let letterIndex = -1;
 let timeEnd;
+let testedLetters = [];
+let foundLetters = [];
+let placedLetters = [];
 
 function App() {
   const [words, setWords] = useState([
@@ -46,6 +50,9 @@ function App() {
     setWinStatus();
     setGameOverDisplay(false);
     setTimeBegin(Date.now());
+    testedLetters = [];
+    foundLetters = [];
+    placedLetters = [];
   };
 
   let isValid = (wordArray) => {
@@ -75,6 +82,15 @@ function App() {
     if (event.key === "Enter") {
       if (letterIndex === 4) {
         if (isValid(words[rowIndex])) {
+          words[rowIndex].forEach((letter, i) => {
+            testedLetters.push(letter);
+            if (answer.split("").some((l) => l === letter)) {
+              foundLetters.push(letter);
+            }
+            if (answer[i] === letter) {
+              placedLetters.push(letter);
+            }
+          });
           if (words[rowIndex].toString().replaceAll(",", "") === answer) {
             timeEnd = Date.now();
             setWinStatus(() => true);
@@ -94,9 +110,55 @@ function App() {
       }
     }
   };
+  const handleKeyboard = (id) => {
+    if (id === "BACK") {
+      if (letterIndex !== -1) {
+        setGameOverDisplay(() => false);
+        setAlertDisplay(() => false);
+        let newWords = [...words];
+        newWords[rowIndex][letterIndex] = "";
+        letterIndex -= 1;
+        setWords(() => newWords);
+      }
+    } else if (id === "ENTER") {
+      if (letterIndex === 4) {
+        if (isValid(words[rowIndex])) {
+          words[rowIndex].forEach((letter, i) => {
+            testedLetters.push(letter);
+            if (answer.split("").some((l) => l === letter)) {
+              foundLetters.push(letter);
+            }
+            if (answer[i] === letter) {
+              placedLetters.push(letter);
+            }
+          });
+          if (words[rowIndex].toString().replaceAll(",", "") === answer) {
+            timeEnd = Date.now();
+            setWinStatus(() => true);
+            setGameOverDisplay(() => true);
+            return;
+          }
+          setRowIndex((prev) => prev + 1);
+          letterIndex = -1;
+          if (rowIndex === 4) {
+            timeEnd = Date.now();
+            setGameOverDisplay(() => true);
+            setWinStatus(() => false);
+          }
+        } else {
+          setAlertDisplay(() => true);
+        }
+      }
+    } else {
+      if (letterIndex !== 4) {
+        let newWords = [...words];
+        letterIndex += 1;
+        newWords[rowIndex][letterIndex] = id;
+        setWords(() => newWords);
+      }
+    }
+  };
 
-  // const timeBegin = useMemo(() => getTime());
-  // useEffect(() => timeBegin= getTime(), []);
   useEffect(() => {
     document.addEventListener("keydown", keyHandler, false);
 
@@ -128,6 +190,12 @@ function App() {
       )}
       <br />
       <Grid words={words} answer={answer} currentRow={rowIndex} />
+      <Keyboard
+        handleKeyboard={handleKeyboard}
+        placedLetters={placedLetters}
+        foundLetters={foundLetters}
+        testedLetters={testedLetters}
+      />
       <p className="signature">Made with ❤️ by Anaïs, in Lyon</p>
     </div>
   );

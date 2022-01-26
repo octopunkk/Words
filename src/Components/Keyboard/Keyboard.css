@@ -1,0 +1,46 @@
+.Keyboard {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  justify-content: center;
+  flex-shrink: 1;
+  width: 100%;
+}
+.row0,
+.row1,
+.row2 {
+  display: inline-flex;
+  padding: 3px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.letter {
+  flex-shrink: 1;
+  border: 1px solid black;
+  padding: 0.5rem;
+  margin: 2px;
+  font-size: large;
+  text-align: center;
+  height: 2rem;
+  width: 1.5rem;
+  line-height: 2rem;
+  color: whitesmoke;
+  cursor: pointer;
+}
+#ENTER,
+#BACK {
+  width: 4rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .letter {
+    height: 1.5rem;
+    width: 1rem;
+    line-height: 1.5rem;
+  }
+  #ENTER,
+  #BACK {
+    width: 3.5rem;
+  }
+}
