@@ -1,4 +1,3 @@
-import { color } from "@mui/system";
 import React from "react";
 import "./Keyboard.css";
 
