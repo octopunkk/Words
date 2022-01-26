@@ -179,6 +179,8 @@ function App() {
           timeEnd={timeEnd}
         />
       )}
+      <div className="filler"></div>
+
       {alertDisplay && (
         <Alert
           severity="error"
@@ -190,12 +192,15 @@ function App() {
       )}
       <br />
       <Grid words={words} answer={answer} currentRow={rowIndex} />
+      <div className="filler"></div>
       <Keyboard
         handleKeyboard={handleKeyboard}
         placedLetters={placedLetters}
         foundLetters={foundLetters}
         testedLetters={testedLetters}
       />
+      <div className="filler"></div>
+
       <p className="signature">Made with ❤️ by Anaïs, in Lyon</p>
     </div>
   );

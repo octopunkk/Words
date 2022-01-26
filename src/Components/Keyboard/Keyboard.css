@@ -27,6 +27,7 @@
   line-height: 2rem;
   color: whitesmoke;
   cursor: pointer;
+  border-radius: 10%;
 }
 #ENTER,
 #BACK {
