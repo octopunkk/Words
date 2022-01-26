@@ -95,6 +95,8 @@ function App() {
             timeEnd = Date.now();
             setWinStatus(() => true);
             setGameOverDisplay(() => true);
+            setRowIndex((prev) => prev + 1);
+
             return;
           }
           setRowIndex((prev) => prev + 1);
@@ -136,6 +138,8 @@ function App() {
             timeEnd = Date.now();
             setWinStatus(() => true);
             setGameOverDisplay(() => true);
+            setRowIndex((prev) => prev + 1);
+
             return;
           }
           setRowIndex((prev) => prev + 1);
@@ -191,7 +195,14 @@ function App() {
         </Alert>
       )}
       <br />
-      <Grid words={words} answer={answer} currentRow={rowIndex} />
+      <Grid
+        words={words}
+        answer={answer}
+        currentRow={rowIndex}
+        placedLetters={placedLetters}
+        foundLetters={foundLetters}
+        testedLetters={testedLetters}
+      />
       <div className="filler"></div>
       <Keyboard
         handleKeyboard={handleKeyboard}

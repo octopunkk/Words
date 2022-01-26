@@ -27,7 +27,15 @@ export function Word(props) {
         if (props.wordRow < props.currentRow) {
           status = checkLetter(letter, index);
         }
-        return <Letter letter={letter} status={status} />;
+        return (
+          <Letter
+            letter={letter}
+            status={status}
+            placedLetters={props.placedLetters}
+            foundLetters={props.foundLetters}
+            testedLetters={props.testedLetters}
+          />
+        );
       })}
     </div>
   );

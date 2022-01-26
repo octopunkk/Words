@@ -23,7 +23,6 @@ export function Keyboard(props) {
   };
 
   let handleClick = (event) => {
-    console.log(event.target.id);
     props.handleKeyboard(event.target.id);
   };
 

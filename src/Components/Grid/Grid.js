@@ -12,6 +12,9 @@ export function Grid(props) {
             answer={props.answer}
             currentRow={props.currentRow}
             wordRow={i}
+            placedLetters={props.placedLetters}
+            foundLetters={props.foundLetters}
+            testedLetters={props.testedLetters}
           />
         );
       })}

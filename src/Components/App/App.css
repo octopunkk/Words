@@ -23,11 +23,8 @@ h1 {
 
 .signature {
   box-sizing: border-box;
-
   font-family: "Roboto", "sans-serif";
   padding: 10px;
-  /* bottom: 10px; */
-  /* position: absolute; */
   color: whitesmoke;
   text-align: center;
   margin: auto;
