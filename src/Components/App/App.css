@@ -24,3 +24,13 @@ h1 {
   display: flex;
   flex-direction: column;
 }
+
+.signature {
+  font-family: "Roboto", "sans-serif";
+  bottom: 10px;
+  position: absolute;
+  color: whitesmoke;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+}

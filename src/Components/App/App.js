@@ -128,6 +128,7 @@ function App() {
       )}
       <br />
       <Grid words={words} answer={answer} currentRow={rowIndex} />
+      <p className="signature">Made with ❤️ by Anaïs, in Lyon</p>
     </div>
   );
 }
