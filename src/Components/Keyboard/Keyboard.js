@@ -11,7 +11,7 @@ export function Keyboard(props) {
   let colorLetter = (letter) => {
     let color;
     if (props.testedLetters.some((l) => l === letter)) {
-      color = "rgb(22, 22, 46)";
+      color = "rgb(18, 18, 46)";
     }
     if (props.foundLetters.some((l) => l === letter)) {
       color = "#f57c00";
