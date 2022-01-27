@@ -15,6 +15,7 @@ export function Grid(props) {
             placedLetters={props.placedLetters}
             foundLetters={props.foundLetters}
             testedLetters={props.testedLetters}
+            isInvalid={props.isInvalid}
           />
         );
       })}

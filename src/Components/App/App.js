@@ -27,6 +27,7 @@ function App() {
   const [rowIndex, setRowIndex] = useState(0);
   const [winStatus, setWinStatus] = useState(); //true if win, false if lose, undef else
   const [timeBegin, setTimeBegin] = useState(Date.now());
+  // const [isInvalid, setIsInvalid] = useState(false);
 
   let pickAnswer = () => {
     let randomIndex = Math.floor(CommonWords.length * Math.random());
@@ -62,13 +63,16 @@ function App() {
   const testKeys = (l) => {
     if (l === "Backspace" || l === "Delete") {
       if (letterIndex !== -1) {
+        // setIsInvalid(false);
         setGameOverDisplay(() => false);
         setAlertDisplay(() => false);
         let newWords = [...words];
         newWords[rowIndex][letterIndex] = "";
         letterIndex -= 1;
         setWords(() => newWords);
+        return;
       }
+      return;
     }
     if (l === "Enter") {
       if (letterIndex === 4) {
@@ -87,7 +91,6 @@ function App() {
             setWinStatus(() => true);
             setGameOverDisplay(() => true);
             setRowIndex((prev) => prev + 1);
-
             return;
           }
           setRowIndex((prev) => prev + 1);
@@ -98,15 +101,18 @@ function App() {
             setWinStatus(() => false);
           }
         } else {
+          // setIsInvalid(true);
           setAlertDisplay(() => true);
         }
       }
+      return;
     }
     if (letterIndex !== 4) {
       let newWords = [...words];
       letterIndex += 1;
       newWords[rowIndex][letterIndex] = l;
       setWords(() => newWords);
+      return;
     }
   };
 
@@ -117,20 +123,24 @@ function App() {
       event.key === "Enter"
     ) {
       testKeys(event.key);
-
-      if (event.keyCode >= 60 && event.keyCode <= 90) {
-        testKeys(event.key.toUpperCase());
-      }
+      return;
+    }
+    if (event.keyCode >= 60 && event.keyCode <= 90) {
+      testKeys(event.key.toUpperCase());
+      return;
     }
   };
 
   const handleKeyboard = (id) => {
     if (id === "BACK") {
       testKeys("Backspace");
+      return;
     } else if (id === "ENTER") {
       testKeys("Enter");
+      return;
     } else {
       testKeys(id);
+      return;
     }
   };
 
@@ -167,6 +177,7 @@ function App() {
       )}
       <br />
       <Grid
+        // isInvalid={isInvalid}
         words={words}
         answer={answer}
         currentRow={rowIndex}
