@@ -27,7 +27,7 @@ function App() {
   const [rowIndex, setRowIndex] = useState(0);
   const [winStatus, setWinStatus] = useState(); //true if win, false if lose, undef else
   const [timeBegin, setTimeBegin] = useState(Date.now());
-  // const [isInvalid, setIsInvalid] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   let pickAnswer = () => {
     let randomIndex = Math.floor(CommonWords.length * Math.random());
@@ -63,7 +63,7 @@ function App() {
   const testKeys = (l) => {
     if (l === "Backspace" || l === "Delete") {
       if (letterIndex !== -1) {
-        // setIsInvalid(false);
+        setIsInvalid(false);
         setGameOverDisplay(() => false);
         setAlertDisplay(() => false);
         let newWords = [...words];
@@ -101,7 +101,7 @@ function App() {
             setWinStatus(() => false);
           }
         } else {
-          // setIsInvalid(true);
+          setIsInvalid(true);
           setAlertDisplay(() => true);
         }
       }
@@ -177,7 +177,7 @@ function App() {
       )}
       <br />
       <Grid
-        // isInvalid={isInvalid}
+        isInvalid={isInvalid}
         words={words}
         answer={answer}
         currentRow={rowIndex}

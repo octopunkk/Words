@@ -1,6 +1,7 @@
 import "./Word.css";
 import React from "react";
 import { Letter } from "../Letter/Letter";
+var classNames = require("classnames");
 
 export function Word(props) {
   let checkLetter = (letter, index) => {
@@ -19,16 +20,10 @@ export function Word(props) {
       return "notFound";
     }
   };
-  // let Invalid = () => {
-  //   if (props.isInvalid && props.wordRow === props.currentRow) {
-  //     return "Invalid";
-  //   } else {
-  //     return false;
-  //   }
-  // };
+  let wordClass = classNames("Word", { Invalid: props.isInvalid });
 
   return (
-    <div className="Word">
+    <div className={wordClass}>
       {props.word.map((letter, index) => {
         let status;
         if (props.wordRow < props.currentRow) {
