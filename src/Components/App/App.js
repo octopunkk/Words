@@ -59,9 +59,8 @@ function App() {
     let word = wordArray.join("");
     return AllWords.some((allWord) => allWord === word);
   };
-
-  const keyHandler = (event) => {
-    if (event.key === "Backspace" || event.key === "Delete") {
+  const testKeys = (l) => {
+    if (l === "Backspace" || l === "Delete") {
       if (letterIndex !== -1) {
         setGameOverDisplay(() => false);
         setAlertDisplay(() => false);
@@ -71,15 +70,7 @@ function App() {
         setWords(() => newWords);
       }
     }
-    if (event.keyCode >= 60 && event.keyCode <= 90) {
-      if (letterIndex !== 4) {
-        let newWords = [...words];
-        letterIndex += 1;
-        newWords[rowIndex][letterIndex] = event.key.toUpperCase();
-        setWords(() => newWords);
-      }
-    }
-    if (event.key === "Enter") {
+    if (l === "Enter") {
       if (letterIndex === 4) {
         if (isValid(words[rowIndex])) {
           words[rowIndex].forEach((letter, i) => {
@@ -109,57 +100,37 @@ function App() {
         } else {
           setAlertDisplay(() => true);
         }
+      }
+    }
+    if (letterIndex !== 4) {
+      let newWords = [...words];
+      letterIndex += 1;
+      newWords[rowIndex][letterIndex] = l;
+      setWords(() => newWords);
+    }
+  };
+
+  const keyHandler = (event) => {
+    if (
+      event.key === "Backspace" ||
+      event.key === "Delete" ||
+      event.key === "Enter"
+    ) {
+      testKeys(event.key);
+
+      if (event.keyCode >= 60 && event.keyCode <= 90) {
+        testKeys(event.key.toUpperCase());
       }
     }
   };
+
   const handleKeyboard = (id) => {
     if (id === "BACK") {
-      if (letterIndex !== -1) {
-        setGameOverDisplay(() => false);
-        setAlertDisplay(() => false);
-        let newWords = [...words];
-        newWords[rowIndex][letterIndex] = "";
-        letterIndex -= 1;
-        setWords(() => newWords);
-      }
+      testKeys("Backspace");
     } else if (id === "ENTER") {
-      if (letterIndex === 4) {
-        if (isValid(words[rowIndex])) {
-          words[rowIndex].forEach((letter, i) => {
-            testedLetters.push(letter);
-            if (answer.split("").some((l) => l === letter)) {
-              foundLetters.push(letter);
-            }
-            if (answer[i] === letter) {
-              placedLetters.push(letter);
-            }
-          });
-          if (words[rowIndex].toString().replaceAll(",", "") === answer) {
-            timeEnd = Date.now();
-            setWinStatus(() => true);
-            setGameOverDisplay(() => true);
-            setRowIndex((prev) => prev + 1);
-
-            return;
-          }
-          setRowIndex((prev) => prev + 1);
-          letterIndex = -1;
-          if (rowIndex === 4) {
-            timeEnd = Date.now();
-            setGameOverDisplay(() => true);
-            setWinStatus(() => false);
-          }
-        } else {
-          setAlertDisplay(() => true);
-        }
-      }
+      testKeys("Enter");
     } else {
-      if (letterIndex !== 4) {
-        let newWords = [...words];
-        letterIndex += 1;
-        newWords[rowIndex][letterIndex] = id;
-        setWords(() => newWords);
-      }
+      testKeys(id);
     }
   };
 
