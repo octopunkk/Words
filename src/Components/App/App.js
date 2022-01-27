@@ -90,7 +90,7 @@ function App() {
             timeEnd = Date.now();
 
             setWinStatus(() => true);
-            setGameOverDisplay(() => true);
+            setTimeout(() => setGameOverDisplay(true), 1000);
             setRowIndex((prev) => prev + 1);
             return;
           }
@@ -98,7 +98,7 @@ function App() {
           letterIndex = -1;
           if (rowIndex === 4) {
             timeEnd = Date.now();
-            setGameOverDisplay(() => true);
+            setTimeout(() => setGameOverDisplay(true), 1000);
             setWinStatus(() => false);
           }
         } else {

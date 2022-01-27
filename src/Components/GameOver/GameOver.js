@@ -65,6 +65,11 @@ export function GameOver(props) {
     <ThemeProvider theme={theme}>
       <div className="GameOverParent">
         <Dialog
+          // TransitionProps={{
+          //   style: {
+          //     transitionDelay: 1000,
+          //   },
+          // }}
           open={open}
           TransitionComponent={Transition}
           keepMounted
