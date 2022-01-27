@@ -11,6 +11,7 @@
   font-weight: 600;
   font-size: 2.5rem;
   flex-shrink: 0;
+  transition: background-color 0.5s ease;
 }
 .Win {
   animation-name: Bounce;

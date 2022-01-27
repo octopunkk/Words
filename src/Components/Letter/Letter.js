@@ -1,5 +1,7 @@
 import React from "react";
 import "./Letter.css";
+import "animate.css";
+
 var classNames = require("classnames");
 
 export function Letter(props) {
@@ -17,7 +19,11 @@ export function Letter(props) {
     return color;
   };
 
-  let letterClass = classNames("letterBox", { Win: props.winStatus });
+  let letterClass = classNames(
+    "letterBox",
+    { Win: props.winStatus },
+    { animate__bounceIn: props.status && !props.winStatus }
+  );
 
   return (
     <div
