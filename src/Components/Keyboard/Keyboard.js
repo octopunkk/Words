@@ -32,6 +32,7 @@ export function Keyboard(props) {
         <div className={"row" + i}>
           {row.split(",").map((letter) => (
             <div
+              key={letter}
               onClick={handleClick}
               style={{ backgroundColor: colorLetter(letter) }}
               className="letter"

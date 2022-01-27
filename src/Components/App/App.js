@@ -88,6 +88,7 @@ function App() {
           });
           if (words[rowIndex].toString().replaceAll(",", "") === answer) {
             timeEnd = Date.now();
+
             setWinStatus(() => true);
             setGameOverDisplay(() => true);
             setRowIndex((prev) => prev + 1);
@@ -177,6 +178,8 @@ function App() {
       )}
       <br />
       <Grid
+        key="grid"
+        winStatus={winStatus}
         isInvalid={isInvalid}
         words={words}
         answer={answer}
@@ -187,6 +190,7 @@ function App() {
       />
       <div className="filler"></div>
       <Keyboard
+        key="keyboard"
         handleKeyboard={handleKeyboard}
         placedLetters={placedLetters}
         foundLetters={foundLetters}

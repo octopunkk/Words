@@ -1,5 +1,6 @@
 import React from "react";
 import "./Letter.css";
+var classNames = require("classnames");
 
 export function Letter(props) {
   let color = () => {
@@ -16,8 +17,16 @@ export function Letter(props) {
     return color;
   };
 
+  let letterClass = classNames("letterBox", { Win: props.winStatus });
+
   return (
-    <div className="letterBox" style={{ backgroundColor: color() }}>
+    <div
+      className={letterClass}
+      style={{
+        backgroundColor: color(),
+        animationDelay: props.index * 0.1 + "s",
+      }}
+    >
       {props.letter}
     </div>
   );

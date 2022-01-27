@@ -31,6 +31,9 @@ export function Word(props) {
         }
         return (
           <Letter
+            key={index}
+            index={index}
+            winStatus={props.winStatus}
             letter={letter}
             status={status}
             placedLetters={props.placedLetters}

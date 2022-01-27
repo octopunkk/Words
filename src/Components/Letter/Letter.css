@@ -12,8 +12,7 @@
   font-size: 2.5rem;
   flex-shrink: 0;
 }
-
-.win {
+.Win {
   animation-name: Bounce;
   animation-duration: 1000ms;
 }
