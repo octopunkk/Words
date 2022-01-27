@@ -19,13 +19,13 @@ export function Word(props) {
       return "notFound";
     }
   };
-  let Invalid = () => {
-    if (props.isInvalid && props.wordRow === props.currentRow) {
-      return "Invalid";
-    } else {
-      return false;
-    }
-  };
+  // let Invalid = () => {
+  //   if (props.isInvalid && props.wordRow === props.currentRow) {
+  //     return "Invalid";
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   return (
     <div className="Word">
