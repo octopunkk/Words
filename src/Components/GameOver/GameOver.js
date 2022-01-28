@@ -58,31 +58,36 @@ export function GameOver(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const winDialog = "Congrats ! You won";
+
+  let getGameTime = () => {
+    let gameTime = Math.floor((props.timeEnd - props.timeBegin) / 1000);
+    let min = Math.floor(gameTime / 60);
+    let sec = gameTime % 60;
+    return `${min} min ${sec} sec`;
+  };
+
+  const winDialog = `Congrats ! You won in ${getGameTime()}`;
   const loseDialog = `Better luck next time ! Word to find was ${props.answer}`;
 
   return (
     <ThemeProvider theme={theme}>
       <div className="GameOverParent">
         <Dialog
-          // TransitionProps={{
-          //   style: {
-          //     transitionDelay: 1000,
-          //   },
-          // }}
           open={open}
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           onBackdropClick={handleClose}
         >
-          <DialogTitle>{props.winStatus ? "STATS" : "GAME OVER"}</DialogTitle>
+          <DialogTitle>
+            {props.winStatus ? "WELL DONE" : "GAME OVER"}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               {props.winStatus ? winDialog : loseDialog}
             </DialogContentText>
           </DialogContent>
-          <Stats timeBegin={props.timeBegin} timeEnd={props.timeEnd} />
+          {/* <Stats timeBegin={props.timeBegin} timeEnd={props.timeEnd} /> */}
           <DialogActions>
             <Button
               variant="contained"
