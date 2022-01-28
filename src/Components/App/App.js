@@ -178,7 +178,7 @@ function App() {
   });
   useEffect(() => {
     resetGame();
-  }, [frenchMode]);
+  }, [frenchMode, resetGame]);
   const AppClass = classNames("App", { wrapper: funkyMode });
 
   return (
