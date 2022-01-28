@@ -66,8 +66,14 @@ export function GameOver(props) {
     return `${min} min ${sec} sec`;
   };
 
-  const winDialog = `Congrats ! You won in ${getGameTime()}`;
-  const loseDialog = `Better luck next time ! Word to find was ${props.answer}`;
+  const winDialog = props.frenchMode
+    ? `Bien joué ! Tu as gagné en ${getGameTime()}`
+    : `Congrats ! You won in ${getGameTime()}`;
+  const loseDialog = props.frenchMode
+    ? `Dommage ! Le mot à trouver était : ${props.answer}`
+    : `Better luck next time ! Word to find was ${props.answer}`;
+  const winTitle = props.frenchMode ? "BRAVO" : "WELL DONE";
+  const loseTitle = props.frenchMode ? "PERDU" : "GAME OVER";
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,9 +85,7 @@ export function GameOver(props) {
           onClose={handleClose}
           onBackdropClick={handleClose}
         >
-          <DialogTitle>
-            {props.winStatus ? "WELL DONE" : "GAME OVER"}
-          </DialogTitle>
+          <DialogTitle>{props.winStatus ? winTitle : loseTitle}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               {props.winStatus ? winDialog : loseDialog}
@@ -94,10 +98,10 @@ export function GameOver(props) {
               startIcon={<ReplayIcon />}
               onClick={handleClick}
             >
-              New game
+              {props.frenchMode ? "Nouvelle partie" : "New game"}
             </Button>
             <Button onClick={handleClose} startIcon={<CloseIcon />}>
-              Close
+              {props.frenchMode ? "Fermer" : "Close"}
             </Button>
           </DialogActions>
         </Dialog>

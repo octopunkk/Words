@@ -4,10 +4,14 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "../Grid/Grid";
 import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
+import { FRAllWords } from "../../Data/FRAllWords";
+import { FRCommonWords } from "../../Data/FRCommonWords";
 import { GameOver } from "../GameOver/GameOver";
 import Alert from "@mui/material/Alert";
 import { Keyboard } from "../Keyboard/Keyboard";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { ReactComponent as FrIcon } from "./france.svg";
+import { ReactComponent as EnIcon } from "./united-kingdom.svg";
 
 var classNames = require("classnames");
 
@@ -32,11 +36,18 @@ function App() {
   const [timeBegin, setTimeBegin] = useState(Date.now());
   const [isInvalid, setIsInvalid] = useState(false);
   const [funkyMode, setFunkymode] = useState(false);
+  const [frenchMode, setFrenchMode] = useState(false);
 
   let pickAnswer = () => {
-    let randomIndex = Math.floor(CommonWords.length * Math.random());
-    let randomPick = CommonWords[randomIndex];
-    return randomPick;
+    if (frenchMode) {
+      let randomIndex = Math.floor(FRCommonWords.length * Math.random());
+      let randomPick = FRCommonWords[randomIndex];
+      return randomPick;
+    } else {
+      let randomIndex = Math.floor(CommonWords.length * Math.random());
+      let randomPick = CommonWords[randomIndex];
+      return randomPick;
+    }
   };
 
   const [answer, setAnswer] = useState(pickAnswer());
@@ -63,7 +74,11 @@ function App() {
 
   let isValid = (wordArray) => {
     let word = wordArray.join("");
-    return AllWords.some((allWord) => allWord === word);
+    if (frenchMode) {
+      return FRAllWords.some((allWord) => allWord === word);
+    } else {
+      return AllWords.some((allWord) => allWord === word);
+    }
   };
   const testKeys = (l) => {
     if (l === "Backspace" || l === "Delete") {
@@ -163,7 +178,9 @@ function App() {
       document.removeEventListener("keydown", keyHandler, false);
     };
   });
-
+  useEffect(() => {
+    resetGame();
+  }, [frenchMode]);
   const AppClass = classNames("App", { wrapper: funkyMode });
 
   return (
@@ -177,9 +194,26 @@ function App() {
         }}
         onClick={handleGitClick}
       />
-      <h1>Words !</h1>
+      {!frenchMode && (
+        <FrIcon
+          className="icon"
+          onClick={() => {
+            setFrenchMode(true);
+          }}
+        />
+      )}
+      {frenchMode && (
+        <EnIcon
+          className="icon"
+          onClick={() => {
+            setFrenchMode(false);
+          }}
+        />
+      )}
+      <h1>{frenchMode ? "Mots !" : "Words !"}</h1>
       {gameOverDisplay && (
         <GameOver
+          frenchMode={frenchMode}
           winStatus={winStatus}
           answer={answer}
           resetGame={resetGame}
@@ -195,7 +229,9 @@ function App() {
           variant="filled"
           sx={{ width: "50%", margin: "0 auto" }}
         >
-          Word not in word list !
+          {frenchMode
+            ? "Mot non présent dans le dictionnaire"
+            : "Word not in word list !"}
         </Alert>
       )}
       <br />
@@ -218,6 +254,7 @@ function App() {
         placedLetters={placedLetters}
         foundLetters={foundLetters}
         testedLetters={testedLetters}
+        frenchMode={frenchMode}
       />
       <div className="filler"></div>
 

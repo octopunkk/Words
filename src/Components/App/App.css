@@ -33,6 +33,15 @@ h1 {
 .filler {
   flex-grow: 1;
 }
+.icon {
+  position: absolute;
+  padding: 10px;
+  cursor: pointer;
+  width: 30px;
+  top: 0;
+  right: 0;
+  border-radius: 13px;
+}
 .wrapper {
   height: 100%;
   width: 100%;
