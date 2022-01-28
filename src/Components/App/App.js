@@ -9,6 +9,8 @@ import Alert from "@mui/material/Alert";
 import { Keyboard } from "../Keyboard/Keyboard";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
+var classNames = require("classnames");
+
 let letterIndex = -1;
 let timeEnd;
 let testedLetters = [];
@@ -29,6 +31,7 @@ function App() {
   const [winStatus, setWinStatus] = useState(); //true if win, false if lose, undef else
   const [timeBegin, setTimeBegin] = useState(Date.now());
   const [isInvalid, setIsInvalid] = useState(false);
+  const [funkyMode, setFunkymode] = useState(false);
 
   let pickAnswer = () => {
     let randomIndex = Math.floor(CommonWords.length * Math.random());
@@ -55,6 +58,7 @@ function App() {
     testedLetters = [];
     foundLetters = [];
     placedLetters = [];
+    setFunkymode(false);
   };
 
   let isValid = (wordArray) => {
@@ -89,12 +93,15 @@ function App() {
           });
           if (words[rowIndex].toString().replaceAll(",", "") === answer) {
             timeEnd = Date.now();
-
             setWinStatus(() => true);
             setTimeout(() => setGameOverDisplay(true), 1000);
             setRowIndex((prev) => prev + 1);
             return;
           }
+          if (words[rowIndex].toString().replaceAll(",", "") === "ANAIS") {
+            setFunkymode(true);
+          }
+
           setRowIndex((prev) => prev + 1);
           letterIndex = -1;
           if (rowIndex === 4) {
@@ -157,8 +164,10 @@ function App() {
     };
   });
 
+  const AppClass = classNames("App", { wrapper: funkyMode });
+
   return (
-    <div className="App">
+    <div className={AppClass}>
       <GitHubIcon
         sx={{
           padding: "10px",
@@ -200,6 +209,7 @@ function App() {
         placedLetters={placedLetters}
         foundLetters={foundLetters}
         testedLetters={testedLetters}
+        funkyMode={funkyMode}
       />
       <div className="filler"></div>
       <Keyboard

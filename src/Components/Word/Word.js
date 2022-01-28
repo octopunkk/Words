@@ -39,6 +39,7 @@ export function Word(props) {
             placedLetters={props.placedLetters}
             foundLetters={props.foundLetters}
             testedLetters={props.testedLetters}
+            funkyMode={props.funkyMode}
           />
         );
       })}

@@ -17,6 +17,7 @@ export function Grid(props) {
             testedLetters={props.testedLetters}
             isInvalid={props.isInvalid && props.currentRow === i}
             winStatus={props.winStatus && props.currentRow === i + 1}
+            funkyMode={props.funkyMode}
           />
         );
       })}

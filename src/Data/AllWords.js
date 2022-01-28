@@ -379,6 +379,7 @@ export let AllWords = [
   "AMUCK",
   "AMUSE",
   "AMYLS",
+  "ANAIS",
   "ANANA",
   "ANATA",
   "ANCHO",
