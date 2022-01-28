@@ -7,6 +7,7 @@ import { CommonWords } from "../../Data/CommonWords";
 import { GameOver } from "../GameOver/GameOver";
 import Alert from "@mui/material/Alert";
 import { Keyboard } from "../Keyboard/Keyboard";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 let letterIndex = -1;
 let timeEnd;
@@ -131,6 +132,9 @@ function App() {
       return;
     }
   };
+  const handleGitClick = () => {
+    window.open("https://github.com/octopunkk/Words");
+  };
 
   const handleKeyboard = (id) => {
     if (id === "BACK") {
@@ -155,6 +159,14 @@ function App() {
 
   return (
     <div className="App">
+      <GitHubIcon
+        sx={{
+          padding: "10px",
+          color: "whitesmoke",
+          cursor: "pointer",
+        }}
+        onClick={handleGitClick}
+      />
       <h1>Words !</h1>
       {gameOverDisplay && (
         <GameOver
