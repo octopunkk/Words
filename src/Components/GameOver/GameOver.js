@@ -10,7 +10,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Stats } from "../Stats/Stats";
+// import { Stats } from "../Stats/Stats";
 
 let mode = "dark";
 
