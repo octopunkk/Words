@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Grid } from "../Grid/Grid";
 import { AllWords } from "../../Data/AllWords";
 import { CommonWords } from "../../Data/CommonWords";
@@ -20,7 +20,17 @@ let timeEnd;
 let testedLetters = [];
 let foundLetters = [];
 let placedLetters = [];
-
+let pickAnswer = (frenchMode) => {
+  if (frenchMode) {
+    let randomIndex = Math.floor(FRCommonWords.length * Math.random());
+    let randomPick = FRCommonWords[randomIndex];
+    return randomPick;
+  } else {
+    let randomIndex = Math.floor(CommonWords.length * Math.random());
+    let randomPick = CommonWords[randomIndex];
+    return randomPick;
+  }
+};
 function App() {
   const [words, setWords] = useState([
     ["", "", "", "", ""],
@@ -38,21 +48,9 @@ function App() {
   const [funkyMode, setFunkymode] = useState(false);
   const [frenchMode, setFrenchMode] = useState(false);
 
-  let pickAnswer = () => {
-    if (frenchMode) {
-      let randomIndex = Math.floor(FRCommonWords.length * Math.random());
-      let randomPick = FRCommonWords[randomIndex];
-      return randomPick;
-    } else {
-      let randomIndex = Math.floor(CommonWords.length * Math.random());
-      let randomPick = CommonWords[randomIndex];
-      return randomPick;
-    }
-  };
+  const [answer, setAnswer] = useState(pickAnswer(frenchMode));
 
-  const [answer, setAnswer] = useState(pickAnswer());
-
-  let resetGame = () => {
+  let resetGame = useCallback(() => {
     setWords([
       ["", "", "", "", ""],
       ["", "", "", "", ""],
@@ -62,7 +60,7 @@ function App() {
     ]);
     letterIndex = -1;
     setRowIndex(0);
-    setAnswer(pickAnswer());
+    setAnswer(pickAnswer(frenchMode));
     setWinStatus();
     setGameOverDisplay(false);
     setTimeBegin(Date.now());
@@ -70,7 +68,7 @@ function App() {
     foundLetters = [];
     placedLetters = [];
     setFunkymode(false);
-  };
+  }, [frenchMode]);
 
   let isValid = (wordArray) => {
     let word = wordArray.join("");
