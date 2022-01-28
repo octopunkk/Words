@@ -1,5 +1,6 @@
 import React from "react";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import "./Keyboard.css";
 
 export function Keyboard(props) {
@@ -40,7 +41,8 @@ export function Keyboard(props) {
               id={letter}
             >
               {letter === "BACK" && <BackspaceIcon />}
-              {letter !== "BACK" && letter}
+              {letter === "ENTER" && <KeyboardReturnIcon />}
+              {letter !== "BACK" && letter !== "ENTER" && letter}
             </div>
           ))}
         </div>
