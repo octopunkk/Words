@@ -164,6 +164,7 @@ function App() {
           padding: "10px",
           color: "whitesmoke",
           cursor: "pointer",
+          position: "absolute",
         }}
         onClick={handleGitClick}
       />
